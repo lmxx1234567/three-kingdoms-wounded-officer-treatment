@@ -1,0 +1,5 @@
+*.md text eol=lf
+*.lua text eol=lf
+*.tsv text eol=lf whitespace=-blank-at-eol
+*.pack binary
+
