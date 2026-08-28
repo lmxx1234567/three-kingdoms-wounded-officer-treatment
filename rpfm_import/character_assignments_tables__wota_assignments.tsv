@@ -1,0 +1,4 @@
+key	target_type	initiation_payload	initiation_cost	maintenance_cost	duration	recall_duration	constraints	base_capture_chance
+#character_assignments_tables;1;db/character_assignments_tables/wota_assignments								
+wota_assignment_recuperate	province		wota_cost_recuperate		4	1	wota_constraint_severe_wound	0
+wota_assignment_seek_physician	province		wota_cost_seek_physician		1	1	wota_constraint_severe_wound	0
