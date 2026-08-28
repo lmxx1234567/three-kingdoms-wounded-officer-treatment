@@ -4,7 +4,7 @@
 
 A campaign mod for **Total War: THREE KINGDOMS 1.7.x** that lets permanently injured officers recover through two character assignments.
 
-The mod is faction-neutral. It does not require Hua Tuo, the Faction Council, or any Yellow Turban council mechanic.
+The mod is faction-neutral. It does not require Hua Tuo, the Faction Council, or any Yellow Turban council mechanic. Simplified Chinese is included in the main Pack; English, Japanese, and Korean are provided as separate language Packs.
 
 ## Assignments
 
@@ -38,6 +38,26 @@ Supported vanilla wound CEOs:
 4. Place it after MTU, TUP, and WDG2 in the load order.
 5. Test with a backup save first.
 
+## Languages
+
+The main Pack uses **Simplified Chinese by default**. Players using another language should enable exactly one language Pack after the main Pack:
+
+| Language | Pack |
+| --- | --- |
+| Simplified Chinese | Included in `wounded_officer_treatment_assignments.pack` |
+| English | [`wota_translation_en.pack`](dist/localization/wota_translation_en.pack) |
+| Japanese | [`wota_translation_ja.pack`](dist/localization/wota_translation_ja.pack) |
+| Korean | [`wota_translation_ko.pack`](dist/localization/wota_translation_ko.pack) |
+
+Load order example:
+
+```text
+wounded_officer_treatment_assignments.pack
+wota_translation_en.pack
+```
+
+Do not enable multiple translation Packs together because they intentionally override the same localisation keys.
+
 ## Compatibility
 
 All custom records use the `wota_` prefix, and the mod does not overwrite vanilla, MTU, TUP, or WDG2 rows. It works directly with characters that use the supported vanilla wound CEOs.
@@ -55,6 +75,8 @@ The included Pack covers the main campaign and DLC campaign-group records curren
 
 ```text
 dist/                  Compiled Mod-type PFH5 Pack
+dist/localization/     Optional English, Japanese, and Korean Loc Packs
+localization/          Translation source TSV files
 pack_root/             Campaign Lua scripts
 rpfm_import/           RPFM-ready DB and Loc TSV files
 tests/                 Host-side Lua logic test
@@ -72,6 +94,7 @@ Passed offline:
 - TSV structure validation
 - RPFM binary compilation
 - Binary DB and Loc round-trip export
+- English, Japanese, and Korean Loc Pack round-trip export
 
 In-game UI and dependency testing is pending on Windows with **Total War: THREE KINGDOMS** installed.
 
@@ -90,4 +113,3 @@ See [`docs/TECHNICAL_NOTES.md`](docs/TECHNICAL_NOTES.md) for the completion trac
 ## License
 
 Licensed under the [MIT License](LICENSE).
-

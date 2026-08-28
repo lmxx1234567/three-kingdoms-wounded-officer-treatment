@@ -4,7 +4,7 @@
 
 这是一个适用于 **《全面战争：三国》1.7.x** 的战役 MOD。永久伤残武将可以通过两项人物差事接受治疗。
 
-本 MOD 对派系文化保持中立，不依赖华佗、幕府会议或黄巾议会机制。
+本 MOD 对派系文化保持中立，不依赖华佗、幕府会议或黄巾议会机制。主 Pack 默认使用简体中文，英语、日语、韩语分别提供独立语言包。
 
 ## 差事规则
 
@@ -38,6 +38,26 @@
 4. 建议排在 MTU、TUP、WDG2 之后。
 5. 首次测试前备份存档。
 
+## 语言包
+
+主 Pack 默认内置**简体中文**。使用其他语言时，在主 MOD 后面启用一个对应语言包：
+
+| 语言 | Pack |
+| --- | --- |
+| 简体中文 | 已包含在 `wounded_officer_treatment_assignments.pack` 中 |
+| 英语 | [`wota_translation_en.pack`](dist/localization/wota_translation_en.pack) |
+| 日语 | [`wota_translation_ja.pack`](dist/localization/wota_translation_ja.pack) |
+| 韩语 | [`wota_translation_ko.pack`](dist/localization/wota_translation_ko.pack) |
+
+加载顺序示例：
+
+```text
+wounded_officer_treatment_assignments.pack
+wota_translation_ja.pack
+```
+
+不要同时启用多个翻译包，因为它们会有意覆盖同一组本地化 key。
+
 ## 兼容性
 
 所有自定义记录均使用 `wota_` 前缀，不覆盖原版、MTU、TUP 或 WDG2 的数据库行。人物包沿用原版伤残 CEO 时可以直接使用。
@@ -55,6 +75,8 @@ Lua 配置负责允许治疗；DB 条目负责让对应伤员看到差事。
 
 ```text
 dist/                  已编译的 Mod 类型 PFH5 Pack
+dist/localization/     可选的英语、日语、韩语 Loc Pack
+localization/          翻译源 TSV
 pack_root/             战役 Lua 脚本
 rpfm_import/           可导入 RPFM 的 DB 与 Loc TSV
 tests/                 本机 Lua 逻辑测试
@@ -72,6 +94,7 @@ docs/                  技术与兼容说明
 - TSV 结构检查
 - RPFM 二进制编译
 - DB 与 Loc 二进制反向导出
+- 英语、日语、韩语 Loc Pack 二进制反向导出
 
 尚未完成 Windows 游戏内 UI 与数据库依赖测试。
 
@@ -90,4 +113,3 @@ lua tests/test_treatment.lua pack_root/script/campaign/mod
 ## 许可证
 
 本项目使用 [MIT License](LICENSE)。
-
