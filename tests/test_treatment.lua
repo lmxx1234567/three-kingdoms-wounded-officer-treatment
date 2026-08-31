@@ -20,6 +20,7 @@ core = {
 local function make_character(cqi, assignment_key, wounds)
     local character = { cqi = cqi, assignment_key = assignment_key, wounds = wounds or {} }
     local faction = { human = true }
+    function faction:is_null_interface() return false end
     function faction:is_human() return self.human end
     function character:faction() return faction end
     function character:is_null_interface() return false end
@@ -119,5 +120,21 @@ c3.assignment_key = ""
 listeners.WOTA_RegisterTreatment.callback(end_context(c3, 31))
 listeners.WOTA_CompleteTreatment.callback(start_context(c3, f3, 34))
 assert_true(c3.wounds[maimed] and not c3.wounds[scarred], "recalled treatment still healed")
+
+-- Faction callbacks must tolerate nil and null-interface factions.
+local nil_faction_context = {
+    faction = function() return nil end
+}
+assert_true(not listeners.WOTA_CompleteTreatment.condition(nil_faction_context), "nil faction passed listener condition")
+listeners.WOTA_CompleteTreatment.callback(nil_faction_context)
+
+local null_faction = {
+    is_null_interface = function() return true end
+}
+local null_faction_context = {
+    faction = function() return null_faction end
+}
+assert_true(not listeners.WOTA_CompleteTreatment.condition(null_faction_context), "null faction passed listener condition")
+listeners.WOTA_CompleteTreatment.callback(null_faction_context)
 
 print("WOTA tests passed")

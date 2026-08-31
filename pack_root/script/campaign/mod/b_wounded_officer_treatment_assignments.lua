@@ -130,7 +130,8 @@ end
 
 local function complete_due_treatments(context)
     local faction = context:faction()
-    if cfg.human_factions_only and not faction:is_human() then return end
+    if not faction or safe_call(faction, "is_null_interface", true) then return end
+    if cfg.human_factions_only and not safe_call(faction, "is_human", false) then return end
 
     local now = context:query_model():turn_number()
     local characters = faction:character_list()
@@ -172,7 +173,9 @@ local function init()
         "WOTA_CompleteTreatment",
         "FactionTurnStart",
         function(context)
-            return (not cfg.human_factions_only) or context:faction():is_human()
+            local faction = context:faction()
+            if not faction or safe_call(faction, "is_null_interface", true) then return false end
+            return (not cfg.human_factions_only) or safe_call(faction, "is_human", false)
         end,
         complete_due_treatments,
         true
