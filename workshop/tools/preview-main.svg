@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1672" height="941" viewBox="0 0 1672 941">
+<image href="../preview/wounded-officer-treatment-base.png" width="1672" height="941"/>
+<rect x="55" y="125" width="650" height="590" rx="24" fill="#080808" fill-opacity=".78" stroke="#c79238" stroke-width="3"/>
+<text x="96" y="285" fill="#f2c763" font-size="58" font-family="PingFang SC, sans-serif" font-weight="bold">伤员疗养差事</text>
+<text x="100" y="335" fill="#eee" font-size="25" font-family="Arial, sans-serif" letter-spacing="2">WOUNDED OFFICER TREATMENT</text>
+<line x1="100" y1="370" x2="635" y2="370" stroke="#c79238" stroke-width="3"/>
+<text x="100" y="445" fill="#fff" font-size="27" font-family="PingFang SC, sans-serif">疗伤修养  800金 · 4回合</text>
+<text x="100" y="505" fill="#fff" font-size="27" font-family="PingFang SC, sans-serif">寻访名医  4000金 · 1回合</text>
+<text x="100" y="610" fill="#cfcfcf" font-size="22" font-family="PingFang SC, sans-serif">永久重伤 · 战役人物差事</text>
+</svg>

@@ -2,6 +2,17 @@
 
 [简体中文](README.zh-CN.md)
 
+## Steam Workshop
+
+| Item | Workshop |
+| --- | --- |
+| Main mod | [Wounded Officer Treatment Assignments](https://steamcommunity.com/sharedfiles/filedetails/?id=3793327386) |
+| English translation | [English Translation](https://steamcommunity.com/sharedfiles/filedetails/?id=3793327818) |
+| Japanese translation | [日本語翻訳](https://steamcommunity.com/sharedfiles/filedetails/?id=3793327897) |
+| Korean translation | [한국어 번역](https://steamcommunity.com/sharedfiles/filedetails/?id=3793328007) |
+
+The three translation Packs require the main mod. Subscribe to the main mod first, then enable exactly one translation Pack.
+
 A campaign mod for **Total War: THREE KINGDOMS 1.7.x** that lets permanently injured officers recover through two character assignments.
 
 The mod is faction-neutral. It does not require Hua Tuo, the Faction Council, or any Yellow Turban council mechanic. Simplified Chinese is included in the main Pack; English, Japanese, and Korean are provided as separate language Packs.
@@ -81,6 +92,7 @@ pack_root/             Campaign Lua scripts
 rpfm_import/           RPFM-ready DB and Loc TSV files
 tests/                 Host-side Lua logic test
 docs/                  Technical and compatibility notes
+workshop/              Workshop previews, content mirrors, VDF templates, and publishing notes
 ```
 
 ## Testing status

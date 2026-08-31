@@ -1,0 +1,12 @@
+"workshopitem"
+{
+    "appid"             "779340"
+    "publishedfileid"   "0"
+    "contentfolder"     "__ABSOLUTE_WORKSHOP_DIR__\\content\\main"
+    "previewfile"       "__ABSOLUTE_WORKSHOP_DIR__\\preview\\wounded-officer-treatment-preview.jpg"
+    "visibility"        "0"
+    "title"             "伤员疗养差事 | Wounded Officer Treatment Assignments"
+    "description"       "让永久重伤的武将获得恢复机会。\\n\\n新增两项人物差事：疗伤修养（800金，4回合）和寻访名医（4000金，1回合）。疗程完成后，将已配置的永久重伤替换为“伤疤”。差事由伤员本人执行；疗程完成前召回人物会取消治疗，已支付的费用不退还。\\n\\n适用于《全面战争：三国》1.7.x。建议排在 MTU、TUP、WDG2 之后。主项目内置简体中文；英语、日语、韩语为独立语言包。首次使用前请备份存档。\\n\\n[hr]\\n[简体中文] 本页为主 MOD。\\n[English] Main mod with Simplified Chinese included. Optional translations: [url=https://steamcommunity.com/sharedfiles/filedetails/?id=__LANG_EN_ID__]English[/url] | [url=https://steamcommunity.com/sharedfiles/filedetails/?id=__LANG_JA_ID__]日本語[/url] | [url=https://steamcommunity.com/sharedfiles/filedetails/?id=__LANG_KO_ID__]한국어[/url].\\n[日本語] メイン MOD（簡体字中国語内蔵）。翻訳パック：英語・日本語・韓国語。\\n[한국어] 메인 모드(중국어 간체 포함). 선택 번역팩: 영어・일본어・한국어.\\n\\n发布后三个语言包的真实 Workshop ID 会替换上面的占位符。"
+    "changenote"       "初版发布：新增伤员疗养差事。"
+    "tags"              "mod;campaign;ui"
+}

@@ -31,3 +31,13 @@ coverage/
 .pytest_cache/
 __pycache__/
 
+# SteamCMD files contain machine-specific absolute paths and published IDs.
+workshop/vdf/*.vdf
+!workshop/vdf/*.vdf.template
+
+# Upload mirrors duplicate the Pack files already tracked under dist/.
+workshop/content/
+
+# Large intermediate images; the compressed JPG previews are the release assets.
+workshop/preview/*-base.png
+workshop/preview/*.png

@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1672" height="941" viewBox="0 0 1672 941">
+<image href="../preview/wounded-officer-treatment-base.png" width="1672" height="941"/>
+<rect x="55" y="125" width="650" height="590" rx="24" fill="#080808" fill-opacity=".78" stroke="#c79238" stroke-width="3"/>
+<text x="96" y="285" fill="#f2c763" font-size="54" font-family="Arial, sans-serif" font-weight="bold">WOUNDED OFFICER</text>
+<text x="100" y="335" fill="#eee" font-size="30" font-family="Arial, sans-serif" letter-spacing="2">TREATMENT ASSIGNMENTS</text>
+<line x1="100" y1="370" x2="635" y2="370" stroke="#c79238" stroke-width="3"/>
+<text x="100" y="445" fill="#fff" font-size="25" font-family="Arial, sans-serif">RECUPERATE  800 GOLD · 4 TURNS</text>
+<text x="100" y="505" fill="#fff" font-size="25" font-family="Arial, sans-serif">SEEK PHYSICIAN  4000 GOLD · 1 TURN</text>
+<text x="100" y="610" fill="#cfcfcf" font-size="24" font-family="Arial, sans-serif">CAMPAIGN CHARACTER ASSIGNMENTS</text>
+</svg>

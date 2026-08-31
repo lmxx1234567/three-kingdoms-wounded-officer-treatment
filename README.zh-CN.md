@@ -2,6 +2,17 @@
 
 [English](README.md)
 
+## Steam 创意工坊
+
+| 项目 | Workshop 链接 |
+| --- | --- |
+| 主 MOD | [伤员疗养差事](https://steamcommunity.com/sharedfiles/filedetails/?id=3793327386) |
+| 英语语言包 | [English Translation](https://steamcommunity.com/sharedfiles/filedetails/?id=3793327818) |
+| 日语语言包 | [日本語翻訳](https://steamcommunity.com/sharedfiles/filedetails/?id=3793327897) |
+| 韩语语言包 | [한국어 번역](https://steamcommunity.com/sharedfiles/filedetails/?id=3793328007) |
+
+三个语言包都依赖主 MOD。请先订阅主 MOD，再启用其中一个语言包。
+
 这是一个适用于 **《全面战争：三国》1.7.x** 的战役 MOD。永久伤残武将可以通过两项人物差事接受治疗。
 
 本 MOD 对派系文化保持中立，不依赖华佗、幕府会议或黄巾议会机制。主 Pack 默认使用简体中文，英语、日语、韩语分别提供独立语言包。
@@ -81,6 +92,7 @@ pack_root/             战役 Lua 脚本
 rpfm_import/           可导入 RPFM 的 DB 与 Loc TSV
 tests/                 本机 Lua 逻辑测试
 docs/                  技术与兼容说明
+workshop/              Workshop 预览图、上传内容、VDF 模板和发布说明
 ```
 
 ## 当前测试状态

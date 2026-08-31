@@ -1,0 +1,12 @@
+"workshopitem"
+{
+    "appid"             "779340"
+    "publishedfileid"   "0"
+    "contentfolder"     "__ABSOLUTE_WORKSHOP_DIR__\\content\\lang-ko"
+    "previewfile"       "__ABSOLUTE_WORKSHOP_DIR__\\preview\\wounded-officer-treatment-preview-ko.jpg"
+    "visibility"        "0"
+    "title"             "부상 장수 치료 임무 - 한국어 번역 | Wounded Officer Treatment Assignments"
+    "description"       "[b]한국어 번역팩[/b]\\n\\nWounded Officer Treatment Assignments 한국어 번역 팩입니다. 먼저 메인 모드를 구독한 뒤 이 번역 팩을 활성화하세요. 여러 번역 팩을 동시에 활성화하지 마세요.\\n\\n메인 모드: https://steamcommunity.com/sharedfiles/filedetails/?id=__MAIN_ID__\\n\\n[简体中文] 这是主 MOD 的韩语语言包。\\n[English] Korean translation pack for the main mod.\\n[日本語] メイン MOD の韓国語翻訳パックです。"
+    "changenote"        "초판: 한국어 번역 팩."
+    "tags"              "mod;campaign;ui"
+}
