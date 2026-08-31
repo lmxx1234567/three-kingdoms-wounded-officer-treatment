@@ -118,7 +118,17 @@ lua tests/test_treatment.lua pack_root/script/campaign/mod
 
 ## Building with RPFM
 
-Create a Mod-type Pack for Three Kingdoms, import `pack_root/script`, then mass-import the TSV files from `rpfm_import`. The TSV files already contain RPFM metadata rows and correct internal Pack paths.
+With RPFM 5.x, start `rpfm_server` and run the repository build client:
+
+```bash
+node tools/build-rpfm.mjs
+```
+
+The client opens the existing Pack, imports the changed TSV files from `rpfm_import`,
+and writes the rebuilt Pack under `build/`. It accepts an optional source Pack and
+output Pack path. The TSV files already contain RPFM metadata rows and correct internal
+Pack paths. For a manual build, create a Mod-type Pack for Three Kingdoms, import
+`pack_root/script`, then mass-import the TSV files from `rpfm_import`.
 
 See [`docs/TECHNICAL_NOTES.md`](docs/TECHNICAL_NOTES.md) for the completion tracker design.
 

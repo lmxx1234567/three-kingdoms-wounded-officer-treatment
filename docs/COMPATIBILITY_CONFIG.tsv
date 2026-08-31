@@ -1,13 +1,18 @@
 purpose	key	value	notes
 assignment_target	province	province	If the loaded vanilla DB uses a prefixed target key, replace target_type in both assignment rows with the exact vanilla province target key.
-campaign_group	main	3k_main_campaign_group	Verify against campaign_groups_tables in the user's installed database.pack.
-campaign_group	mandate_of_heaven	3k_dlc04_campaign_group	Delete the row if absent; replace it if the installed DB uses a different campaign-group key.
-campaign_group	a_world_betrayed	3k_dlc05_campaign_group	Delete the row if absent; replace it if the installed DB uses a different campaign-group key.
-campaign_group	the_furious_wild	3k_dlc06_campaign_group	Delete the row if absent; replace it if the installed DB uses a different campaign-group key.
-campaign_group	fates_divided	3k_dlc07_campaign_group	Delete the row if absent; replace it if the installed DB uses a different campaign-group key.
+campaign_group	main	3k_main_campaign_group_all	Verified against vanilla campaign_group_character_assignments_tables; covers generic assignments in the main timeline, including chapter campaigns.
+campaign_group	main_han	3k_main_campaign_group_han_empire_factions	Verified vanilla broad Han-faction group.
+campaign_group	main_bandit	3k_main_campaign_group_faction_bandits	Verified vanilla broad bandit group.
+campaign_group	main_yellow_turban	3k_main_campaign_factions_yellow_turban	Verified vanilla broad Yellow Turban group.
+campaign_group	mandate_of_heaven_han	3k_dlc04_campaign_factions_han_empire	Verified vanilla 182 Han-faction group.
+campaign_group	mandate_of_heaven_yellow_turban	3k_dlc04_campaign_factions_yellow_turban	Verified vanilla 182 Yellow Turban group.
+campaign_group	the_furious_wild_nanman	3k_dlc06_campaign_group_assignments_nanman_all	Verified vanilla broad Nanman assignment group.
+campaign_group	eight_princes	ep_campaign_group_eight_princes_factions	Verified vanilla Eight Princes faction group.
+campaign_group	yellow_turban_heaven	3k_ytr_campaign_group_politics_court_nobles_heaven	Verified vanilla Yellow Turban Heaven assignment group.
+campaign_group	yellow_turban_land	3k_ytr_campaign_group_politics_court_nobles_land	Verified vanilla Yellow Turban Land assignment group.
+campaign_group	yellow_turban_man	3k_ytr_campaign_group_politics_court_nobles_man	Verified vanilla Yellow Turban Man assignment group.
 wound	maimed_arm	3k_main_ceo_trait_physical_maimed_arm	Verified vanilla CEO.
 wound	maimed_leg	3k_main_ceo_trait_physical_maimed_leg	Verified vanilla CEO.
 wound	one_eyed	3k_main_ceo_trait_physical_one-eyed	Verified vanilla CEO.
 wound	blind	3k_main_ceo_trait_physical_blind	Verified vanilla CEO.
 recovery	scarred	3k_main_ceo_trait_physical_scarred	Verified vanilla recovery CEO.
-

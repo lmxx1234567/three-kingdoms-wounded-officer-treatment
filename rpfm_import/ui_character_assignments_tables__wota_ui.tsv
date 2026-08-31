@@ -1,4 +1,4 @@
 key	character_assignment	localised_title	localised_description	icon_path	radar_mode	ui_character_assignment_category
 #ui_character_assignments_tables;4;db/ui_character_assignments_tables/wota_ui						
-wota_ui_recuperate	wota_assignment_recuperate					wota_treatment_category
-wota_ui_seek_physician	wota_assignment_seek_physician					wota_treatment_category
+wota_ui_recuperate	wota_assignment_recuperate			/ui/campaign ui/effect_bundles/resilience.png		wota_treatment_category
+wota_ui_seek_physician	wota_assignment_seek_physician			/ui/campaign ui/effect_bundles/resilience.png		wota_treatment_category

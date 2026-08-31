@@ -11,12 +11,12 @@ The script uses the public 3K interfaces `active_assignment`, `assignment_record
 ## Follow-up work requiring the complete game installation
 
 The repository contains the mod data and scripts, but not the vanilla Three Kingdoms
-pack files or the game executable. The following work must therefore be deferred until
-the complete game installation is available. A complete installation means the relevant
-`data/*.pack` files, an RPFM game configuration for Three Kingdoms, and a runnable game
-copy for in-game verification.
+pack files or the game executable. The local Three Kingdoms installation is now
+configured in RPFM. The icon resource and database semantics below have been verified against the installed
+vanilla `database.pack`. The Pack has been rebuilt and verified to reach the campaign
+loading path; assignment behavior and broader compatibility still require regression checks.
 
-### 1. Enumerate and select a vanilla assignment icon
+### 1. Enumerate and select a vanilla assignment icon — verified
 
 - Load the vanilla CA packs in RPFM and enumerate the `ui` resources, especially PNG
   files whose paths contain `icon`, `character`, `assignment`, `heal`, `wound`,
@@ -25,11 +25,11 @@ copy for in-game verification.
   format, and alpha-channel behavior.
 - Check whether the icon is stored in `data.pack` or a patch/DLC pack, so the mod does
   not depend on an optional DLC unnecessarily.
-- Prefer one existing vanilla treatment/character-status icon shared by both treatment
-  assignments. Avoid guessing a path or introducing a new image until the vanilla
-  candidate has been verified.
+- The verified shared treatment icon is
+  `/ui/campaign ui/effect_bundles/resilience.png`, used by the vanilla
+  `3k_ytr_assignment_healing_rituals` assignment.
 
-### 2. Verify `icon_path` semantics in the vanilla database
+### 2. Verify `icon_path` semantics in the vanilla database — verified
 
 - Compare vanilla rows in `ui_character_assignments_tables` and
   `ui_character_assignment_categories_tables` to determine whether the assignment
@@ -38,10 +38,13 @@ copy for in-game verification.
   slot, or produces a missing-resource warning.
 - Check whether the path is case-sensitive and whether it must use the virtual `ui/...`
   path, including the file extension.
-- Confirm whether the same icon path works in the base campaign and each supported DLC
-  campaign group.
+- Vanilla assignment rows use the effect-bundle path in `ui_character_assignments_tables`;
+  category rows use the assignment-slot path in
+  `ui_character_assignment_categories_tables`. The mod reuses the verified resilience
+  icon for both treatment assignments and the vanilla Man slot icon for the custom
+  treatment category.
 
-### 3. Apply and validate the icon change
+### 3. Apply and validate the icon change — source applied
 
 - Fill the selected path in `rpfm_import/ui_character_assignments_tables__wota_ui.tsv`
   and/or `rpfm_import/ui_character_assignment_categories_tables__wota_category.tsv`,

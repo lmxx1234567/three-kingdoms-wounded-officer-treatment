@@ -26,6 +26,7 @@ roundtrip/
 dependencies_cache/
 
 # Test coverage and local tooling
+.tools/
 .coverage
 coverage/
 .pytest_cache/
