@@ -63,11 +63,23 @@ const imports = [
   ["rpfm_import/ui_character_assignment_categories_tables__wota_category.tsv", "db/ui_character_assignment_categories_tables/wota_category"],
 ];
 
+const scriptImports = [
+  ["pack_root/script/campaign/mod/a_wota_config.lua", "script/campaign/mod/a_wota_config.lua"],
+  ["pack_root/script/campaign/mod/b_wounded_officer_treatment_assignments.lua", "script/campaign/mod/b_wounded_officer_treatment_assignments.lua"],
+];
+
 for (const [tsvArg, tablePath] of imports) {
   const tsvPath = resolve(tsvArg);
   if (!existsSync(tsvPath)) fail(`TSV not found: ${tsvArg}`);
   await send({ ImportTSV: [packKey, tablePath, tsvPath] });
   console.log(`Imported ${tsvArg}`);
+}
+
+for (const [scriptArg, packPath] of scriptImports) {
+  const scriptPath = resolve(scriptArg);
+  if (!existsSync(scriptPath)) fail(`Script not found: ${scriptArg}`);
+  await send({ AddPackedFiles: [packKey, [scriptPath], [{ File: packPath }], null] });
+  console.log(`Imported ${scriptArg}`);
 }
 
 await send({ SavePackAs: [packKey, outputPack] });

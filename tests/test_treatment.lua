@@ -121,4 +121,3 @@ listeners.WOTA_CompleteTreatment.callback(start_context(c3, f3, 34))
 assert_true(c3.wounds[maimed] and not c3.wounds[scarred], "recalled treatment still healed")
 
 print("WOTA tests passed")
-
