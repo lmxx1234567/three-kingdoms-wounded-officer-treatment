@@ -1,6 +1,10 @@
 # Technical notes
 
-The assignment DB applies the initiation cost and duration. Lua never deducts treasury, preventing double charges.
+The assignment DB supplies the initiation cost and duration. Local recuperation
+has no initiation cost; only the foreign physician assignment uses the linked
+4000-gold resource transaction. Lua does not modify treasury, avoiding duplicate
+charges. The saved assignment key is used only for treatment timing and recall
+handling.
 
 `CharacterTurnEnd` observes a newly started assignment and saves its due turn. `FactionTurnStart` heals when the due turn is reached. If the active assignment disappears before that due turn, `CharacterTurnEnd` clears the saved treatment as a recall/cancellation.
 

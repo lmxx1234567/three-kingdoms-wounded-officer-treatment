@@ -58,6 +58,10 @@ const [packKey] = (await send({ OpenPackFiles: [sourcePack] })).StringContainerI
 await send({ SetGameSelected: ["three_kingdoms", false] });
 
 const imports = [
+  ["rpfm_import/character_assignments_tables__wota_assignments.tsv", "db/character_assignments_tables/wota_assignments"],
+  ["rpfm_import/character_assignment_constraint_sets_tables__wota_constraints.tsv", "db/character_assignment_constraint_sets_tables/wota_constraints"],
+  ["rpfm_import/character_assignment_constraint_set_required_ceos_tables__wota_wounds.tsv", "db/character_assignment_constraint_set_required_ceos_tables/wota_wounds"],
+  ["rpfm_import/resource_transactions_tables__wota_costs.tsv", "db/resource_transactions_tables/wota_costs"],
   ["rpfm_import/campaign_group_character_assignments_tables__wota_campaigns.tsv", "db/campaign_group_character_assignments_tables/wota_campaigns"],
   ["rpfm_import/ui_character_assignments_tables__wota_ui.tsv", "db/ui_character_assignments_tables/wota_ui"],
   ["rpfm_import/ui_character_assignment_categories_tables__wota_category.tsv", "db/ui_character_assignment_categories_tables/wota_category"],

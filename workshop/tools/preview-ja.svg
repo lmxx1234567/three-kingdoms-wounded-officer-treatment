@@ -4,7 +4,7 @@
 <text x="96" y="285" fill="#f2c763" font-size="58" font-family="Hiragino Sans, sans-serif" font-weight="bold">傷兵療養任務</text>
 <text x="100" y="335" fill="#eee" font-size="25" font-family="Arial, sans-serif" letter-spacing="2">WOUNDED OFFICER TREATMENT</text>
 <line x1="100" y1="370" x2="635" y2="370" stroke="#c79238" stroke-width="3"/>
-<text x="100" y="445" fill="#fff" font-size="28" font-family="Hiragino Sans, sans-serif">療養  800金 · 4ターン</text>
+<text x="100" y="445" fill="#fff" font-size="28" font-family="Hiragino Sans, sans-serif">療養  国内無料 · 4ターン</text>
 <text x="100" y="505" fill="#fff" font-size="28" font-family="Hiragino Sans, sans-serif">名医を探す  4000金 · 1ターン</text>
 <text x="100" y="610" fill="#cfcfcf" font-size="24" font-family="Hiragino Sans, sans-serif">負傷将軍 · キャンペーン任務</text>
 </svg>

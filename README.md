@@ -21,10 +21,10 @@ The mod is faction-neutral. It does not require Hua Tuo, the Faction Council, or
 
 | Assignment | Cost | Duration | Result |
 | --- | ---: | ---: | --- |
-| Recuperate | 800 | 4 turns | Replaces configured permanent wounds with `Scarred` |
+| Recuperate locally | Free | 4 turns | Replaces configured permanent wounds with `Scarred` |
 | Seek a Renowned Physician | 4,000 | 1 turn | Replaces configured permanent wounds with `Scarred` |
 
-Both assignments are performed by the injured officer. Recalling an officer before treatment finishes cancels the recovery and does not refund the initiation cost.
+Both assignments are performed by the injured officer. Local recuperation is free; foreign physician treatment costs 4000. Recalling an officer before treatment finishes cancels recovery, does not refund the physician fee, and adds no extra recall delay.
 
 By default, one completed treatment removes all configured severe wounds from that officer and adds:
 
