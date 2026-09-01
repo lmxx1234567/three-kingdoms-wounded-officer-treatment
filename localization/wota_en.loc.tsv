@@ -1,7 +1,7 @@
 key	text	tooltip
 #Loc;1;text/db/wota_en.loc		
 ui_character_assignments_localised_title_wota_ui_recuperate	Recuperate	true
-ui_character_assignments_localised_description_wota_ui_recuperate	Withdraw from military duties and recuperate in safety. Costs 800 and takes 4 turns. On completion, severe permanent injuries are replaced with Scarred. Recalling the officer early cancels treatment and the payment is not refunded.	true
+ui_character_assignments_localised_description_wota_ui_recuperate	Recuperate locally in safety. It is free and takes 4 turns. On completion, severe permanent injuries are replaced with Scarred. Recalling the officer early cancels treatment, with no additional recall delay.	true
 ui_character_assignments_localised_title_wota_ui_seek_physician	Seek a Renowned Physician	true
-ui_character_assignments_localised_description_wota_ui_seek_physician	Send far and wide for a renowned physician, trading wealth for swift treatment. Costs 4,000 and takes 1 turn away from military duties. On completion, severe permanent injuries are replaced with Scarred. Recalling the officer early cancels treatment and the payment is not refunded.	true
+ui_character_assignments_localised_description_wota_ui_seek_physician	Send the officer on an assignment abroad to seek treatment from a foreign renowned physician. It costs 4,000 and takes 1 turn away from military duties. On completion, severe permanent injuries are replaced with Scarred. Recalling the officer early cancels treatment; the payment is not refunded and there is no additional recall delay.	true
 wota_treatment_category_title	Treatment	true

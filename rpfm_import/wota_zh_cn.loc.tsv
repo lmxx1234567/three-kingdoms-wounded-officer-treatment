@@ -1,7 +1,7 @@
 key	text	tooltip
 #Loc;1;text/db/wota_zh_cn.loc		
 ui_character_assignments_localised_title_wota_ui_recuperate	疗伤修养	true
-ui_character_assignments_localised_description_wota_ui_recuperate	安心静养，徐图康复。需支付800金并休养4回合；完成后，严重伤残将转化为伤疤。差事被提前召回时不会治愈，费用亦不退还。	true
+ui_character_assignments_localised_description_wota_ui_recuperate	在本地安心静养，徐图康复。无需花费，休养4回合；完成后，严重伤残将转化为伤疤。治疗完成前召回不会治愈，也没有额外召回耗时。	true
 ui_character_assignments_localised_title_wota_ui_seek_physician	寻访名医	true
-ui_character_assignments_localised_description_wota_ui_seek_physician	遣人四方延请名医，以重金换取迅速诊治。需支付4000金并离开军务1回合；完成后，严重伤残将转化为伤疤。差事被提前召回时不会治愈，费用亦不退还。	true
+ui_character_assignments_localised_description_wota_ui_seek_physician	必须将人物派往外国差事，选择外国名医并支付4000金，以换取迅速诊治，仅需离开军务1回合；完成后，严重伤残将转化为伤疤。治疗完成前召回不会治愈，费用不予退还，也没有额外召回耗时。	true
 wota_treatment_category_title	疗伤	true

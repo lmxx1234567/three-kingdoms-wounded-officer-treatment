@@ -7,6 +7,6 @@
     "visibility"        "0"
     "title"             "傷兵療養任務 - 日本語訳 | Wounded Officer Treatment Assignments"
     "description"       "[b]日本語翻訳パック[/b]\\n\\nWounded Officer Treatment Assignments の日本語翻訳パックです。先にメイン MOD を購読し、その後この翻訳パックを有効にしてください。複数の翻訳パックを同時に有効にしないでください。\\n\\nメイン MOD： https://steamcommunity.com/sharedfiles/filedetails/?id=__MAIN_ID__\\n\\n[简体中文] 这是主 MOD 的日语语言包。\\n[English] Japanese translation pack for the main mod.\\n[한국어] 메인 모드의 일본어 번역팩입니다."
-    "changenote"        "初版：日本語翻訳パック。"
+    "changenote"        "メイン MOD の治療費用と召還ルールを更新。"
     "tags"              "mod;campaign;ui"
 }

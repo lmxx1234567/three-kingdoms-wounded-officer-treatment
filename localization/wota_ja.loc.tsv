@@ -1,7 +1,7 @@
 key	text	tooltip
 #Loc;1;text/db/wota_ja.loc		
 ui_character_assignments_localised_title_wota_ui_recuperate	療養	true
-ui_character_assignments_localised_description_wota_ui_recuperate	軍務を離れて静養し、回復に専念します。費用は800、期間は4ターンです。完了すると、深刻な後遺症は「傷痕」に置き換わります。途中で召還した場合、治療は中止され、費用は返還されません。	true
+ui_character_assignments_localised_description_wota_ui_recuperate	国内で静養し、回復に専念します。費用は無料で、4ターンかかります。完了すると、深刻な後遺症は「傷痕」に置き換わります。途中で召還しても追加の召還待ち時間はありません。	true
 ui_character_assignments_localised_title_wota_ui_seek_physician	名医を探す	true
-ui_character_assignments_localised_description_wota_ui_seek_physician	各地に使者を送り、名医を招いて迅速な治療を受けます。費用は4000、軍務を離れる期間は1ターンです。完了すると、深刻な後遺症は「傷痕」に置き換わります。途中で召還した場合、治療は中止され、費用は返還されません。	true
+ui_character_assignments_localised_description_wota_ui_seek_physician	武将を国外の任務に派遣し、外国の名医による迅速な治療を受けます。費用は4000、軍務を離れる期間は1ターンです。完了すると、深刻な後遺症は「傷痕」に置き換わります。途中で召還しても追加の召還待ち時間はなく、費用は返還されません。	true
 wota_treatment_category_title	治療	true

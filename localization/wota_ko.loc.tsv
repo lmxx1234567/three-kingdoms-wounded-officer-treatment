@@ -1,7 +1,7 @@
 key	text	tooltip
 #Loc;1;text/db/wota_ko.loc		
 ui_character_assignments_localised_title_wota_ui_recuperate	요양 치료	true
-ui_character_assignments_localised_description_wota_ui_recuperate	군무에서 물러나 안정을 취하며 회복에 전념합니다. 비용은 800이며 4턴이 걸립니다. 완료하면 심각한 영구 부상이 '흉터'로 대체됩니다. 도중에 장수를 소환하면 치료가 취소되며 비용은 환불되지 않습니다.	true
+ui_character_assignments_localised_description_wota_ui_recuperate	현지에서 군무를 떠나 안정을 취하며 회복합니다. 무료이며 4턴이 걸립니다. 완료하면 심각한 영구 부상이 '흉터'로 대체됩니다. 도중에 소환해도 추가 소환 대기 시간은 없습니다.	true
 ui_character_assignments_localised_title_wota_ui_seek_physician	명의를 수소문하다	true
-ui_character_assignments_localised_description_wota_ui_seek_physician	각지에 사람을 보내 명의를 초빙하고 많은 비용을 들여 신속하게 치료합니다. 비용은 4000이며 군무에서 1턴 동안 물러납니다. 완료하면 심각한 영구 부상이 '흉터'로 대체됩니다. 도중에 장수를 소환하면 치료가 취소되며 비용은 환불되지 않습니다.	true
+ui_character_assignments_localised_description_wota_ui_seek_physician	장수를 외국 임무에 파견해 외국 명의에게 신속한 치료를 받습니다. 비용은 4000이며 군무에서 1턴 동안 물러납니다. 완료하면 심각한 영구 부상이 '흉터'로 대체됩니다. 도중에 소환해도 추가 소환 대기 시간은 없으며 비용은 환불되지 않습니다.	true
 wota_treatment_category_title	치료	true

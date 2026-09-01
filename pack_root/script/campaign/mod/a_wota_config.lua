@@ -26,4 +26,3 @@ WOTA_CONFIG.severe_wound_ceos = {
 WOTA_CONFIG.recovery_ceo = "3k_main_ceo_trait_physical_scarred"
 WOTA_CONFIG.heal_all_configured_wounds = true
 WOTA_CONFIG.human_factions_only = true
-

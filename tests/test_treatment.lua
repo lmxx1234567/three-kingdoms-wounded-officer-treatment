@@ -22,6 +22,7 @@ local function make_character(cqi, assignment_key, wounds)
     local faction = { human = true }
     function faction:is_null_interface() return false end
     function faction:is_human() return self.human end
+    function faction:name() return "faction_" .. tostring(cqi) end
     function character:faction() return faction end
     function character:is_null_interface() return false end
     function character:command_queue_index() return self.cqi end
@@ -101,6 +102,7 @@ local scarred = "3k_main_ceo_trait_physical_scarred"
 
 -- Four-turn recuperation.
 local c1, f1 = make_character(101, WOTA_CONFIG.rest_assignment_key, { [maimed] = true })
+listeners.WOTA_RegisterTreatment.callback(end_context(c1, 10))
 listeners.WOTA_RegisterTreatment.callback(end_context(c1, 10))
 listeners.WOTA_CompleteTreatment.callback(start_context(c1, f1, 13))
 assert_true(c1.wounds[maimed], "recuperation completed one turn early")

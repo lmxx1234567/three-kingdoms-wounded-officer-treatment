@@ -1,4 +1,4 @@
 key	treasury_change	expenditure_type_when_instant	income_type_when_instant	expenditure_type_when_regular	income_type_when_regular
 #resource_transactions_tables;1;db/resource_transactions_tables/wota_costs					
-wota_cost_recuperate	-800				
+wota_cost_recuperate	0				
 wota_cost_seek_physician	-4000				
