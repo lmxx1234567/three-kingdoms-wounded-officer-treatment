@@ -147,6 +147,10 @@ local function hua_tuo_cooldown_key(faction)
     return HUA_TUO_COOLDOWN_PREFIX .. tostring(faction_cqi(faction))
 end
 
+local function reset_hua_tuo_cooldown(faction)
+    cm:set_saved_value(hua_tuo_cooldown_key(faction), 0)
+end
+
 local function hua_tuo_concluded_key(faction)
     return HUA_TUO_CONCLUDED_PREFIX .. tostring(faction_cqi(faction))
 end
@@ -391,10 +395,12 @@ local function resolve_hua_tuo_dilemma(context)
         local cost = cfg.hua_tuo_recruit_cost or 1000
         if safe_call(faction, "treasury", 0) < cost then
             log("Hua Tuo recruitment cancelled because treasury is insufficient")
+            reset_hua_tuo_cooldown(faction)
             return
         end
         if not award_faction_ceo(context, faction, cfg.hua_tuo_follower_ceo) then
             log("Hua Tuo recruitment cancelled because the unique follower is unavailable")
+            reset_hua_tuo_cooldown(faction)
             return
         end
         local modify_faction = context:modify_model():get_modify_faction(faction)
@@ -405,6 +411,7 @@ local function resolve_hua_tuo_dilemma(context)
     elseif action == "confiscate" then
         if not award_faction_ceo(context, faction, cfg.hua_tuo_manual_ceo) then
             log("Hua Tuo manual confiscation cancelled because the unique accessory is unavailable")
+            reset_hua_tuo_cooldown(faction)
             return
         end
         apply_confiscation_penalty(context, faction)
@@ -416,14 +423,21 @@ local function resolve_hua_tuo_dilemma(context)
     local cost = cfg.hua_tuo_cost or 2000
     if safe_call(faction, "treasury", 0) < cost then
         log("Hua Tuo treatment cancelled because treasury is insufficient")
+        reset_hua_tuo_cooldown(faction)
         return
     end
 
     local patient = valid_pending_patient(context, faction, patient_cqi)
-    if not patient then return end
+    if not patient then
+        reset_hua_tuo_cooldown(faction)
+        return
+    end
 
     local modify_faction = context:modify_model():get_modify_faction(faction)
-    if not modify_faction or modify_faction:is_null_interface() then return end
+    if not modify_faction or modify_faction:is_null_interface() then
+        reset_hua_tuo_cooldown(faction)
+        return
+    end
     modify_faction:decrease_treasury(cost)
 
     local healed = replace_wounds(context, patient)
