@@ -12,6 +12,16 @@ Automatic expiry may remove `active_assignment()` before `FactionTurnStart`; for
 
 The script uses the public 3K interfaces `active_assignment`, `assignment_record_key`, character CEO query management, and modify-character CEO management (`remove_ceos`, `add_ceo`).
 
+## Hua Tuo settlement event
+
+At `FactionTurnStart`, the script looks for configured permanent-wound CEOs on characters whose military force both reports `is_replenishing()` and is embedded in a garrison residence for which `is_settlement()` is true. This intentionally excludes wounded officers merely standing in friendly territory or stationed outside a settlement.
+
+Eligible human factions roll the configured 10% chance when at least one available action can be afforded (or the free manual-confiscation option exists). One eligible character is selected using the campaign model's synchronized random-number generator. The selected character CQI, per-faction cooldown, and whether that faction has concluded its Hua Tuo story are stored with `cm:set_saved_value`, so pending choices and the Hua Tuo-to-generic-physician transition survive save/load.
+
+Five dilemma records provide the static UI layouts required by the game: Hua Tuo with both unique rewards available, either reward available, neither reward available, and a generic renowned physician. Before choosing a variant, Lua scans every faction inventory and every spawned character for the vanilla Hua Tuo follower and manual CEOs. `can_create_ceo` is also checked before display and again before resolution.
+
+`DilemmaChoiceMadeEvent` maps the chosen dilemma and zero-based choice index to treatment, recruitment, confiscation, or decline. Treatment revalidates the patient and treasury before charging 2000. Recruitment rechecks uniqueness, charges 1000, adds the vanilla follower to the faction CEO inventory, and concludes that faction's Hua Tuo story. Confiscation adds the vanilla manual, applies the custom five-turn `wota_loyalty_effect_hua_tuo_confiscated` to every current faction character, and also concludes the story. Future eligible encounters for a concluded faction use the generic two-choice physician dilemma.
+
 ## Follow-up work requiring the complete game installation
 
 The repository contains the mod data and scripts, but not the vanilla Three Kingdoms

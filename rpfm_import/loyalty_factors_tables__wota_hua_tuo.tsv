@@ -1,0 +1,3 @@
+key	minimum_value	maximum_value	ignore_reset	data_driven_factor_requires_ceo_equipped_in_set
+#loyalty_factors_tables;2;db/loyalty_factors_tables/wota_hua_tuo				
+wota_loyalty_factor_hua_tuo_confiscated	-10	0	false	

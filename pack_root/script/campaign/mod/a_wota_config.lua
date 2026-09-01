@@ -7,6 +7,25 @@ WOTA_CONFIG.enabled = true
 WOTA_CONFIG.rest_assignment_key = "wota_assignment_recuperate"
 WOTA_CONFIG.doctor_assignment_key = "wota_assignment_seek_physician"
 
+-- Hua Tuo may visit a settlement where a wounded officer's army is
+-- garrisoned and actively replenishing. The dilemma is script-triggered.
+WOTA_CONFIG.hua_tuo_event_enabled = true
+WOTA_CONFIG.hua_tuo_dilemma_key = "wota_dilemma_hua_tuo_visits"
+WOTA_CONFIG.hua_tuo_dilemma_keys = {
+    basic = "wota_dilemma_hua_tuo_visits",
+    follower = "wota_dilemma_hua_tuo_visits_recruit",
+    manual = "wota_dilemma_hua_tuo_visits_manual",
+    both = "wota_dilemma_hua_tuo_visits_both"
+}
+WOTA_CONFIG.physician_dilemma_key = "wota_dilemma_physician_visits"
+WOTA_CONFIG.hua_tuo_cost = 2000
+WOTA_CONFIG.hua_tuo_recruit_cost = 1000
+WOTA_CONFIG.hua_tuo_chance_percent = 10
+WOTA_CONFIG.hua_tuo_cooldown_turns = 8
+WOTA_CONFIG.hua_tuo_follower_ceo = "3k_main_ancillary_follower_hua_tuo"
+WOTA_CONFIG.hua_tuo_manual_ceo = "3k_main_ancillary_accessory_hua_tuos_manual"
+WOTA_CONFIG.hua_tuo_confiscation_loyalty_effect = "wota_loyalty_effect_hua_tuo_confiscated"
+
 -- Duration is also defined in character_assignments_tables. These values are
 -- used by the save-safe completion tracker and must match the DB rows.
 WOTA_CONFIG.assignment_duration = {

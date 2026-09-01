@@ -13,9 +13,17 @@
 
 The three translation Packs require the main mod. Subscribe to the main mod first, then enable exactly one translation Pack.
 
-A campaign mod for **Total War: THREE KINGDOMS 1.7.x** that lets permanently injured officers recover through two character assignments.
+A campaign mod for **Total War: THREE KINGDOMS 1.7.x** that lets permanently injured officers recover through two character assignments or a chance encounter with Hua Tuo.
 
-The mod is faction-neutral. It does not require Hua Tuo, the Faction Council, or any Yellow Turban council mechanic. Simplified Chinese is included in the main Pack; English, Japanese, and Korean are provided as separate language Packs.
+The mod is faction-neutral. Its event does not require Hua Tuo to be recruited, nor does the mod depend on the Faction Council or any Yellow Turban council mechanic. Simplified Chinese is included in the main Pack; English, Japanese, and Korean are provided as separate language Packs.
+
+## Hua Tuo random event
+
+When an army containing a permanently injured officer is **garrisoned in a settlement and actively replenishing**, there is a 10% chance each turn that Hua Tuo visits. One eligible officer is selected at random. Paying 2,000 gold immediately replaces that officer's configured severe wounds with `Scarred`; declining costs nothing.
+
+If the vanilla unique Hua Tuo follower is not owned anywhere in the campaign, the faction may pay 1,000 gold to retain him. If the unique Hua Tuo's Manual is unowned, the faction may instead imprison Hua Tuo and seize it, giving all current faction characters -10 satisfaction for five turns. Neither Easter-egg choice also treats the selected patient.
+
+Hua Tuo can still travel and offer treatment while either ancillary belongs to another faction; only the corresponding unique reward is hidden. After a faction successfully recruits Hua Tuo or seizes the manual, its future encounters become two-choice visits from unnamed renowned physicians. The event has an eight-turn cooldown. Chance, costs, and cooldown are configurable in `pack_root/script/campaign/mod/a_wota_config.lua`.
 
 ## Assignments
 
@@ -103,6 +111,8 @@ Passed offline:
 - Four-turn treatment timing
 - One-turn treatment timing
 - Early-recall cancellation
+- Hua Tuo/physician settlement eligibility, dynamic unique-ancillary choices, costs, and cooldown
+- Recruitment/confiscation terminal state, world-wide unique CEO checks, and five-turn satisfaction penalty
 - TSV structure validation
 - RPFM binary compilation
 - Binary DB and Loc round-trip export
@@ -121,7 +131,7 @@ lua tests/test_treatment.lua pack_root/script/campaign/mod
 With RPFM 5.x, start `rpfm_server` and run the repository build client:
 
 ```bash
-node tools/build-rpfm.mjs
+node --experimental-websocket tools/build-rpfm.mjs
 ```
 
 The client opens the existing Pack, imports the changed TSV files from `rpfm_import`,

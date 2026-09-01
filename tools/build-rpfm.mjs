@@ -4,7 +4,10 @@ import { dirname, resolve } from "node:path";
 const [, , sourcePackArg = "dist/wounded_officer_treatment_assignments.pack", outputPackArg] = process.argv;
 const sourcePack = resolve(sourcePackArg);
 const outputPack = resolve(outputPackArg ?? "build/wounded_officer_treatment_assignments.pack");
-const ws = new WebSocket("ws://127.0.0.1:45127/ws");
+if (!globalThis.WebSocket) {
+  fail("WebSocket is unavailable; on Node.js 20 run with --experimental-websocket");
+}
+const ws = new globalThis.WebSocket("ws://127.0.0.1:45127/ws");
 let nextId = 1;
 let sessionReady;
 const pending = new Map();
@@ -65,6 +68,10 @@ const imports = [
   ["rpfm_import/campaign_group_character_assignments_tables__wota_campaigns.tsv", "db/campaign_group_character_assignments_tables/wota_campaigns"],
   ["rpfm_import/ui_character_assignments_tables__wota_ui.tsv", "db/ui_character_assignments_tables/wota_ui"],
   ["rpfm_import/ui_character_assignment_categories_tables__wota_category.tsv", "db/ui_character_assignment_categories_tables/wota_category"],
+  ["rpfm_import/dilemmas_tables__wota_hua_tuo.tsv", "db/dilemmas_tables/wota_hua_tuo"],
+  ["rpfm_import/cdir_events_dilemma_choice_details_tables__wota_hua_tuo.tsv", "db/cdir_events_dilemma_choice_details_tables/wota_hua_tuo"],
+  ["rpfm_import/loyalty_factors_tables__wota_hua_tuo.tsv", "db/loyalty_factors_tables/wota_hua_tuo"],
+  ["rpfm_import/loyalty_effects_tables__wota_hua_tuo.tsv", "db/loyalty_effects_tables/wota_hua_tuo"],
 ];
 
 const scriptImports = [

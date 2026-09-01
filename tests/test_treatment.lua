@@ -17,15 +17,58 @@ core = {
     end
 }
 
-local function make_character(cqi, assignment_key, wounds)
-    local character = { cqi = cqi, assignment_key = assignment_key, wounds = wounds or {} }
-    local faction = { human = true }
+local function make_character(cqi, assignment_key, wounds, replenishing_in_settlement)
+    local character = {
+        cqi = cqi,
+        assignment_key = assignment_key,
+        wounds = wounds or {},
+        loyalty_effects = {}
+    }
+    local faction = { human = true, treasury_value = 5000, ancillaries = {} }
     function faction:is_null_interface() return false end
     function faction:is_human() return self.human end
     function faction:name() return "faction_" .. tostring(cqi) end
+    function faction:command_queue_index() return cqi + 1000 end
+    function faction:treasury() return self.treasury_value end
+    function faction:ceo_management()
+        local owner = self
+        return {
+            is_null_interface = function() return false end,
+            can_create_ceo = function(_, key) return owner.ancillaries[key] ~= true end,
+            all_ceos = function()
+                local items = {}
+                for key, enabled in pairs(owner.ancillaries) do
+                    if enabled then
+                        items[#items + 1] = {
+                            is_null_interface = function() return false end,
+                            ceo_data_key = function() return key end
+                        }
+                    end
+                end
+                return {
+                    num_items = function() return #items end,
+                    item_at = function(_, index) return items[index + 1] end
+                }
+            end
+        }
+    end
     function character:faction() return faction end
     function character:is_null_interface() return false end
     function character:command_queue_index() return self.cqi end
+    function character:has_military_force() return replenishing_in_settlement ~= nil end
+    function character:military_force()
+        return {
+            is_null_interface = function() return false end,
+            is_replenishing = function() return replenishing_in_settlement == true end,
+            has_garrison_residence = function() return replenishing_in_settlement ~= nil end,
+            garrison_residence = function()
+                return {
+                    is_null_interface = function() return false end,
+                    is_settlement = function() return replenishing_in_settlement == true end
+                }
+            end
+        }
+    end
     function character:active_assignment()
         if self.assignment_key == "" then return { is_null_interface = function() return true end } end
         return {
@@ -57,13 +100,38 @@ local function make_character(cqi, assignment_key, wounds)
     return character, faction
 end
 
-local function make_modify_model(character)
+local function make_modify_model(character, faction)
     return {
+        random_number = function(_, minimum, _) return minimum end,
         get_modify_character_ceo_management = function()
             return {
                 is_null_interface = function() return false end,
                 remove_ceos = function(_, key) character.wounds[key] = nil end,
                 add_ceo = function(_, key) character.wounds[key] = true end
+            }
+        end,
+        get_modify_faction = function()
+            return {
+                is_null_interface = function() return false end,
+                trigger_dilemma = function(_, key)
+                    faction.triggered_dilemma = key
+                    return true
+                end,
+                decrease_treasury = function(_, amount)
+                    faction.treasury_value = faction.treasury_value - amount
+                end,
+                ceo_management = function()
+                    return {
+                        is_null_interface = function() return false end,
+                        add_ceo = function(_, key) faction.ancillaries[key] = true end
+                    }
+                end
+            }
+        end,
+        get_modify_character = function(_, target)
+            return {
+                is_null_interface = function() return false end,
+                add_loyalty_effect = function(_, key) target.loyalty_effects[key] = true end
             }
         end
     }
@@ -83,11 +151,45 @@ local function start_context(character, faction, turn)
             item_at = function() return character end
         }
     end
+    local model = {
+        turn_number = function() return turn end,
+        character_for_command_queue_index = function(_, cqi)
+            if cqi == character.cqi then return character end
+            return { is_null_interface = function() return true end }
+        end,
+        world = function()
+            return {
+                is_null_interface = function() return false end,
+                faction_list = function()
+                    local items = faction.world_factions or { faction }
+                    return {
+                        num_items = function() return #items end,
+                        item_at = function(_, index) return items[index + 1] end
+                    }
+                end,
+                character_list = function()
+                    local items = faction.world_characters or { character }
+                    return {
+                        num_items = function() return #items end,
+                        item_at = function(_, index) return items[index + 1] end
+                    }
+                end
+            }
+        end
+    }
+    local modify_model = make_modify_model(character, faction)
     return {
         faction = function() return faction end,
-        query_model = function() return { turn_number = function() return turn end } end,
-        modify_model = function() return make_modify_model(character) end
+        query_model = function() return model end,
+        modify_model = function() return modify_model end
     }
+end
+
+local function dilemma_context(character, faction, choice, turn)
+    local context = start_context(character, faction, turn)
+    context.choice = function() return choice end
+    context.dilemma = function() return faction.triggered_dilemma or WOTA_CONFIG.hua_tuo_dilemma_key end
+    return context
 end
 
 local function assert_true(value, message)
@@ -122,6 +224,105 @@ c3.assignment_key = ""
 listeners.WOTA_RegisterTreatment.callback(end_context(c3, 31))
 listeners.WOTA_CompleteTreatment.callback(start_context(c3, f3, 34))
 assert_true(c3.wounds[maimed] and not c3.wounds[scarred], "recalled treatment still healed")
+
+-- Hua Tuo can visit a wounded officer whose army is replenishing in a settlement.
+local c4, f4 = make_character(104, "", { [maimed] = true }, true)
+listeners.WOTA_TriggerHuaTuo.callback(start_context(c4, f4, 40))
+assert_true(f4.triggered_dilemma == WOTA_CONFIG.hua_tuo_dilemma_keys.both, "full Hua Tuo dilemma did not trigger")
+listeners.WOTA_ResolveHuaTuo.callback(dilemma_context(c4, f4, 0, 40))
+assert_true(f4.treasury_value == 3000, "Hua Tuo treatment did not deduct 2000")
+assert_true(not c4.wounds[maimed] and c4.wounds[scarred], "Hua Tuo treatment did not heal patient")
+
+-- Declining the visit has no cost and does not heal.
+local c5, f5 = make_character(105, "", { [maimed] = true }, true)
+listeners.WOTA_TriggerHuaTuo.callback(start_context(c5, f5, 50))
+listeners.WOTA_ResolveHuaTuo.callback(dilemma_context(c5, f5, 3, 50))
+assert_true(f5.treasury_value == 5000, "declining Hua Tuo still deducted money")
+assert_true(c5.wounds[maimed] and not c5.wounds[scarred], "declining Hua Tuo still healed patient")
+f5.triggered_dilemma = nil
+listeners.WOTA_TriggerHuaTuo.callback(start_context(c5, f5, 51))
+assert_true(not f5.triggered_dilemma, "Hua Tuo ignored the per-faction cooldown")
+
+-- An army that is not replenishing is not eligible even if the officer is wounded.
+local c6, f6 = make_character(106, "", { [maimed] = true }, false)
+listeners.WOTA_TriggerHuaTuo.callback(start_context(c6, f6, 60))
+assert_true(not f6.triggered_dilemma, "Hua Tuo triggered outside settlement replenishment")
+
+-- The paid offer is not generated when the faction cannot afford it.
+local c7, f7 = make_character(107, "", { [maimed] = true }, true)
+f7.treasury_value = 1999
+listeners.WOTA_TriggerHuaTuo.callback(start_context(c7, f7, 70))
+assert_true(f7.triggered_dilemma == WOTA_CONFIG.hua_tuo_dilemma_keys.both,
+    "free manual option should allow the dilemma below treatment cost")
+
+-- Recruiting Hua Tuo costs 1,000, grants the unique follower without healing,
+-- and permanently changes future visits for this faction to generic physicians.
+local c8, f8 = make_character(108, "", { [maimed] = true }, true)
+listeners.WOTA_TriggerHuaTuo.callback(start_context(c8, f8, 80))
+listeners.WOTA_ResolveHuaTuo.callback(dilemma_context(c8, f8, 1, 80))
+assert_true(f8.treasury_value == 4000, "recruiting Hua Tuo did not deduct 1000")
+assert_true(f8.ancillaries[WOTA_CONFIG.hua_tuo_follower_ceo], "Hua Tuo follower was not granted")
+assert_true(c8.wounds[maimed] and not c8.wounds[scarred], "recruiting Hua Tuo also healed the patient")
+f8.triggered_dilemma = nil
+listeners.WOTA_TriggerHuaTuo.callback(start_context(c8, f8, 88))
+assert_true(f8.triggered_dilemma == WOTA_CONFIG.physician_dilemma_key,
+    "Hua Tuo recruitment did not switch later visits to generic physicians")
+
+-- Confiscating the manual grants the unique accessory, does not heal, applies
+-- the configured loyalty effect, and also concludes this faction's Hua Tuo chain.
+local c9, f9 = make_character(109, "", { [maimed] = true }, true)
+listeners.WOTA_TriggerHuaTuo.callback(start_context(c9, f9, 90))
+listeners.WOTA_ResolveHuaTuo.callback(dilemma_context(c9, f9, 2, 90))
+assert_true(f9.ancillaries[WOTA_CONFIG.hua_tuo_manual_ceo], "Hua Tuo's Manual was not granted")
+assert_true(c9.loyalty_effects[WOTA_CONFIG.hua_tuo_confiscation_loyalty_effect],
+    "confiscation satisfaction penalty was not applied")
+assert_true(c9.wounds[maimed] and not c9.wounds[scarred], "confiscating the manual also healed the patient")
+f9.triggered_dilemma = nil
+listeners.WOTA_TriggerHuaTuo.callback(start_context(c9, f9, 98))
+assert_true(f9.triggered_dilemma == WOTA_CONFIG.physician_dilemma_key,
+    "manual confiscation did not switch later visits to generic physicians")
+
+-- Existing unique ancillaries hide only their own Easter-egg choices.
+local c10, f10 = make_character(110, "", { [maimed] = true }, true)
+local _, other10 = make_character(210, "", {}, nil)
+other10.ancillaries[WOTA_CONFIG.hua_tuo_follower_ceo] = true
+f10.world_factions = { f10, other10 }
+listeners.WOTA_TriggerHuaTuo.callback(start_context(c10, f10, 100))
+assert_true(f10.triggered_dilemma == WOTA_CONFIG.hua_tuo_dilemma_keys.manual,
+    "Hua Tuo follower in another faction did not hide recruitment only")
+
+local c11, f11 = make_character(111, "", { [maimed] = true }, true)
+local _, other11 = make_character(211, "", {}, nil)
+other11.ancillaries[WOTA_CONFIG.hua_tuo_manual_ceo] = true
+f11.world_factions = { f11, other11 }
+listeners.WOTA_TriggerHuaTuo.callback(start_context(c11, f11, 110))
+assert_true(f11.triggered_dilemma == WOTA_CONFIG.hua_tuo_dilemma_keys.follower,
+    "Hua Tuo manual in another faction did not hide confiscation only")
+
+local c12, f12 = make_character(112, "", { [maimed] = true }, true)
+f12.ancillaries[WOTA_CONFIG.hua_tuo_follower_ceo] = true
+f12.ancillaries[WOTA_CONFIG.hua_tuo_manual_ceo] = true
+listeners.WOTA_TriggerHuaTuo.callback(start_context(c12, f12, 120))
+assert_true(f12.triggered_dilemma == WOTA_CONFIG.hua_tuo_dilemma_keys.basic,
+    "both owned ancillaries did not leave the basic Hua Tuo dilemma")
+
+-- Availability is checked again when the choice resolves. If another faction
+-- acquires the unique follower while the dilemma is open, no money is charged
+-- and this faction's Hua Tuo story remains unconcluded.
+local c13, f13 = make_character(113, "", { [maimed] = true }, true)
+local _, other13 = make_character(213, "", {}, nil)
+f13.world_factions = { f13, other13 }
+listeners.WOTA_TriggerHuaTuo.callback(start_context(c13, f13, 130))
+assert_true(f13.triggered_dilemma == WOTA_CONFIG.hua_tuo_dilemma_keys.both,
+    "race-condition setup did not show both choices")
+other13.ancillaries[WOTA_CONFIG.hua_tuo_follower_ceo] = true
+listeners.WOTA_ResolveHuaTuo.callback(dilemma_context(c13, f13, 1, 130))
+assert_true(f13.treasury_value == 5000 and not f13.ancillaries[WOTA_CONFIG.hua_tuo_follower_ceo],
+    "unavailable follower was duplicated or still charged")
+f13.triggered_dilemma = nil
+listeners.WOTA_TriggerHuaTuo.callback(start_context(c13, f13, 138))
+assert_true(f13.triggered_dilemma == WOTA_CONFIG.hua_tuo_dilemma_keys.manual,
+    "failed unique reward incorrectly concluded the Hua Tuo story")
 
 -- Faction callbacks must tolerate nil and null-interface factions.
 local nil_faction_context = {
