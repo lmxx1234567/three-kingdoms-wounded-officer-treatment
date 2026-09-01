@@ -77,6 +77,7 @@ const imports = [
 const scriptImports = [
   ["pack_root/script/campaign/mod/a_wota_config.lua", "script/campaign/mod/a_wota_config.lua"],
   ["pack_root/script/campaign/mod/b_wounded_officer_treatment_assignments.lua", "script/campaign/mod/b_wounded_officer_treatment_assignments.lua"],
+  ["pack_root/script/campaign/mod/c_wounded_officer_treatment_hua_tuo.lua", "script/campaign/mod/c_wounded_officer_treatment_hua_tuo.lua"],
 ];
 
 for (const [tsvArg, tablePath] of imports) {
