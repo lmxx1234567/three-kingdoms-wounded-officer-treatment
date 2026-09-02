@@ -12,5 +12,12 @@ FIRST	wota_dilemma_hua_tuo_visits_both	false
 SECOND	wota_dilemma_hua_tuo_visits_both	false	
 THIRD	wota_dilemma_hua_tuo_visits_both	false	
 FOURTH	wota_dilemma_hua_tuo_visits_both	false	
+FIRST	wota_dilemma_hua_tuo_visits_recruit_only	false	
+SECOND	wota_dilemma_hua_tuo_visits_recruit_only	false	
+FIRST	wota_dilemma_hua_tuo_visits_manual_only	false	
+SECOND	wota_dilemma_hua_tuo_visits_manual_only	false	
+FIRST	wota_dilemma_hua_tuo_visits_rewards_only	false	
+SECOND	wota_dilemma_hua_tuo_visits_rewards_only	false	
+THIRD	wota_dilemma_hua_tuo_visits_rewards_only	false	
 FIRST	wota_dilemma_physician_visits	false	
 SECOND	wota_dilemma_physician_visits	false	

@@ -23,7 +23,7 @@ When an army containing a permanently injured officer is **garrisoned in a settl
 
 If the vanilla unique Hua Tuo follower is not owned anywhere in the campaign, the faction may pay 1,000 gold to retain him. If the unique Hua Tuo's Manual is unowned, the faction may instead imprison Hua Tuo and seize it, giving all current faction characters -10 satisfaction for five turns. Neither Easter-egg choice also treats the selected patient.
 
-Hua Tuo can still travel and offer treatment while either ancillary belongs to another faction; only the corresponding unique reward is hidden. After a faction successfully recruits Hua Tuo or seizes the manual, its future encounters become two-choice visits from unnamed renowned physicians. The event has an eight-turn cooldown. Chance, costs, and cooldown are configurable in `pack_root/script/campaign/mod/a_wota_config.lua`.
+Hua Tuo can still travel and offer treatment while either ancillary belongs to another faction; only the corresponding unique reward is hidden. Paid choices also follow the current treasury: treatment is hidden below 2,000 gold, recruitment is hidden below 1,000, and the event is suppressed when no action can succeed. After a faction successfully recruits Hua Tuo or seizes the manual, its future encounters become two-choice visits from unnamed renowned physicians. The event has an eight-turn cooldown. Chance, costs, and cooldown are configurable in `pack_root/script/campaign/mod/a_wota_config.lua`.
 
 ## Assignments
 

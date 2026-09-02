@@ -72,6 +72,7 @@ const imports = [
   ["rpfm_import/cdir_events_dilemma_choice_details_tables__wota_hua_tuo.tsv", "db/cdir_events_dilemma_choice_details_tables/wota_hua_tuo"],
   ["rpfm_import/loyalty_factors_tables__wota_hua_tuo.tsv", "db/loyalty_factors_tables/wota_hua_tuo"],
   ["rpfm_import/loyalty_effects_tables__wota_hua_tuo.tsv", "db/loyalty_effects_tables/wota_hua_tuo"],
+  ["rpfm_import/wota_zh_cn.loc.tsv", "text/db/wota_zh_cn.loc"],
 ];
 
 const scriptImports = [

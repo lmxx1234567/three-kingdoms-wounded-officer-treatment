@@ -15,7 +15,10 @@ WOTA_CONFIG.hua_tuo_dilemma_keys = {
     basic = "wota_dilemma_hua_tuo_visits",
     follower = "wota_dilemma_hua_tuo_visits_recruit",
     manual = "wota_dilemma_hua_tuo_visits_manual",
-    both = "wota_dilemma_hua_tuo_visits_both"
+    both = "wota_dilemma_hua_tuo_visits_both",
+    recruit_only = "wota_dilemma_hua_tuo_visits_recruit_only",
+    manual_only = "wota_dilemma_hua_tuo_visits_manual_only",
+    rewards_only = "wota_dilemma_hua_tuo_visits_rewards_only"
 }
 WOTA_CONFIG.physician_dilemma_key = "wota_dilemma_physician_visits"
 WOTA_CONFIG.hua_tuo_cost = 2000

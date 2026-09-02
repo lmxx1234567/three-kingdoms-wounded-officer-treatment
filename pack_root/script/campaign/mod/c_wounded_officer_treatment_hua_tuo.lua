@@ -99,22 +99,37 @@ local function faction_can_receive_ceo(model, faction, wanted_key)
     return ok and can_create == true
 end
 
-local function hua_tuo_dilemma_for(model, faction)
+local function hua_tuo_dilemma_for(model, faction, treasury)
+    local can_treat = treasury >= (cfg.hua_tuo_cost or 2000)
     if cm:get_saved_value(hua_tuo_concluded_key(faction)) == true then
-        return cfg.physician_dilemma_key, false, false
+        if can_treat then return cfg.physician_dilemma_key end
+        return nil
     end
 
     local follower_available = faction_can_receive_ceo(model, faction, cfg.hua_tuo_follower_ceo)
     local manual_available = faction_can_receive_ceo(model, faction, cfg.hua_tuo_manual_ceo)
+    local can_recruit = follower_available and treasury >= (cfg.hua_tuo_recruit_cost or 1000)
     local keys = cfg.hua_tuo_dilemma_keys or {}
-    if follower_available and manual_available then
-        return keys.both or cfg.hua_tuo_dilemma_key, true, true
-    elseif follower_available then
-        return keys.follower or cfg.hua_tuo_dilemma_key, true, false
-    elseif manual_available then
-        return keys.manual or cfg.hua_tuo_dilemma_key, false, true
+
+    if can_treat then
+        if can_recruit and manual_available then
+            return keys.both or cfg.hua_tuo_dilemma_key
+        elseif can_recruit then
+            return keys.follower or cfg.hua_tuo_dilemma_key
+        elseif manual_available then
+            return keys.manual or cfg.hua_tuo_dilemma_key
+        end
+        return keys.basic or cfg.hua_tuo_dilemma_key
     end
-    return keys.basic or cfg.hua_tuo_dilemma_key, false, false
+
+    if can_recruit and manual_available then
+        return keys.rewards_only
+    elseif can_recruit then
+        return keys.recruit_only
+    elseif manual_available then
+        return keys.manual_only
+    end
+    return nil
 end
 
 local function dilemma_action(dilemma_key, choice)
@@ -125,6 +140,12 @@ local function dilemma_action(dilemma_key, choice)
         return ({ [0] = "treat", [1] = "recruit", [2] = "decline" })[choice]
     elseif dilemma_key == (keys.manual or "") then
         return ({ [0] = "treat", [1] = "confiscate", [2] = "decline" })[choice]
+    elseif dilemma_key == (keys.rewards_only or "") then
+        return ({ [0] = "recruit", [1] = "confiscate", [2] = "decline" })[choice]
+    elseif dilemma_key == (keys.recruit_only or "") then
+        return ({ [0] = "recruit", [1] = "decline" })[choice]
+    elseif dilemma_key == (keys.manual_only or "") then
+        return ({ [0] = "confiscate", [1] = "decline" })[choice]
     elseif dilemma_key == cfg.physician_dilemma_key
         or dilemma_key == (keys.basic or cfg.hua_tuo_dilemma_key) then
         return ({ [0] = "treat", [1] = "decline" })[choice]
@@ -186,12 +207,9 @@ local function maybe_trigger_hua_tuo(context)
     local patient = patients[context:modify_model():random_number(1, #patients)]
     local patient_cqi = character_cqi(patient)
     if patient_cqi <= 0 then return end
-    local model = context:query_model()
-    local dilemma_key, follower_available, manual_available = hua_tuo_dilemma_for(model, faction)
     local treasury = safe_call(faction, "treasury", 0)
-    local can_treat = treasury >= (cfg.hua_tuo_cost or 2000)
-    local can_recruit = follower_available and treasury >= (cfg.hua_tuo_recruit_cost or 1000)
-    if not can_treat and not can_recruit and not manual_available then return end
+    local dilemma_key = hua_tuo_dilemma_for(context:query_model(), faction, treasury)
+    if not dilemma_key or dilemma_key == "" then return end
 
     cm:set_saved_value(pending_key, patient_cqi)
     cm:set_saved_value(hua_tuo_cooldown_key(faction), now + (cfg.hua_tuo_cooldown_turns or 8))
@@ -312,8 +330,13 @@ local function resolve_hua_tuo_dilemma(context)
         reset_hua_tuo_cooldown(faction)
         return
     end
-    modify_faction:decrease_treasury(cost)
     local healed = replace_wounds(context, patient)
+    if not healed then
+        log("Physician treatment failed before payment; cqi=" .. patient_cqi)
+        reset_hua_tuo_cooldown(faction)
+        return
+    end
+    modify_faction:decrease_treasury(cost)
     log("Physician treatment resolved; cqi=" .. patient_cqi .. " healed=" .. tostring(healed))
 end
 

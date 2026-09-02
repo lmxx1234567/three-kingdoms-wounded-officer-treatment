@@ -104,6 +104,9 @@ local function make_modify_model(character, faction)
     return {
         random_number = function(_, minimum, _) return minimum end,
         get_modify_character_ceo_management = function()
+            if character.modify_ceo_unavailable then
+                return { is_null_interface = function() return true end }
+            end
             return {
                 is_null_interface = function() return false end,
                 remove_ceos = function(_, key) character.wounds[key] = nil end,
@@ -198,6 +201,7 @@ end
 
 dofile(script_root .. "/a_wota_config.lua")
 dofile(script_root .. "/b_wounded_officer_treatment_assignments.lua")
+dofile(script_root .. "/c_wounded_officer_treatment_hua_tuo.lua")
 
 local maimed = "3k_main_ceo_trait_physical_maimed_leg"
 local scarred = "3k_main_ceo_trait_physical_scarred"
@@ -248,12 +252,40 @@ local c6, f6 = make_character(106, "", { [maimed] = true }, false)
 listeners.WOTA_TriggerHuaTuo.callback(start_context(c6, f6, 60))
 assert_true(not f6.triggered_dilemma, "Hua Tuo triggered outside settlement replenishment")
 
--- The paid offer is not generated when the faction cannot afford it.
+-- Below the treatment price, show only the affordable unique-reward choices.
 local c7, f7 = make_character(107, "", { [maimed] = true }, true)
 f7.treasury_value = 1999
 listeners.WOTA_TriggerHuaTuo.callback(start_context(c7, f7, 70))
-assert_true(f7.triggered_dilemma == WOTA_CONFIG.hua_tuo_dilemma_keys.both,
-    "free manual option should allow the dilemma below treatment cost")
+assert_true(f7.triggered_dilemma == WOTA_CONFIG.hua_tuo_dilemma_keys.rewards_only,
+    "unaffordable treatment choice was still shown")
+
+local c7b, f7b = make_character(117, "", { [maimed] = true }, true)
+f7b.treasury_value = 999
+listeners.WOTA_TriggerHuaTuo.callback(start_context(c7b, f7b, 71))
+assert_true(f7b.triggered_dilemma == WOTA_CONFIG.hua_tuo_dilemma_keys.manual_only,
+    "unaffordable treatment and recruitment choices were still shown")
+
+local c7c, f7c = make_character(127, "", { [maimed] = true }, true)
+f7c.treasury_value = 999
+f7c.ancillaries[WOTA_CONFIG.hua_tuo_manual_ceo] = true
+listeners.WOTA_TriggerHuaTuo.callback(start_context(c7c, f7c, 72))
+assert_true(not f7c.triggered_dilemma,
+    "event triggered even though no displayed action could succeed")
+
+local c7d, f7d = make_character(137, "", { [maimed] = true }, true)
+f7d.treasury_value = 1999
+listeners.WOTA_TriggerHuaTuo.callback(start_context(c7d, f7d, 73))
+listeners.WOTA_ResolveHuaTuo.callback(dilemma_context(c7d, f7d, 0, 73))
+assert_true(f7d.treasury_value == 999 and f7d.ancillaries[WOTA_CONFIG.hua_tuo_follower_ceo],
+    "recruit-only affordable layout mapped its first choice incorrectly")
+
+local c7e, f7e = make_character(147, "", { [maimed] = true }, true)
+f7e.treasury_value = 999
+listeners.WOTA_TriggerHuaTuo.callback(start_context(c7e, f7e, 74))
+listeners.WOTA_ResolveHuaTuo.callback(dilemma_context(c7e, f7e, 0, 74))
+assert_true(f7e.ancillaries[WOTA_CONFIG.hua_tuo_manual_ceo]
+    and c7e.loyalty_effects[WOTA_CONFIG.hua_tuo_confiscation_loyalty_effect],
+    "manual-only affordable layout mapped its first choice incorrectly")
 
 -- Recruiting Hua Tuo costs 1,000, grants the unique follower without healing,
 -- and permanently changes future visits for this faction to generic physicians.
@@ -323,6 +355,20 @@ f13.triggered_dilemma = nil
 listeners.WOTA_TriggerHuaTuo.callback(start_context(c13, f13, 138))
 assert_true(f13.triggered_dilemma == WOTA_CONFIG.hua_tuo_dilemma_keys.manual,
     "failed unique reward incorrectly concluded the Hua Tuo story")
+
+-- If wound replacement cannot obtain a modify interface, treatment is free and
+-- the cooldown is reset so a working visit can be offered again immediately.
+local c14, f14 = make_character(114, "", { [maimed] = true }, true)
+c14.modify_ceo_unavailable = true
+listeners.WOTA_TriggerHuaTuo.callback(start_context(c14, f14, 140))
+listeners.WOTA_ResolveHuaTuo.callback(dilemma_context(c14, f14, 0, 140))
+assert_true(f14.treasury_value == 5000 and c14.wounds[maimed],
+    "failed wound replacement charged money or changed the wound")
+c14.modify_ceo_unavailable = false
+f14.triggered_dilemma = nil
+listeners.WOTA_TriggerHuaTuo.callback(start_context(c14, f14, 141))
+assert_true(f14.triggered_dilemma == WOTA_CONFIG.hua_tuo_dilemma_keys.both,
+    "failed wound replacement did not reset the cooldown")
 
 -- Faction callbacks must tolerate nil and null-interface factions.
 local nil_faction_context = {
