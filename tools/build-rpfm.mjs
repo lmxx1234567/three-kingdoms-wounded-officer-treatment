@@ -1,4 +1,4 @@
-import { existsSync, mkdirSync } from "node:fs";
+import { existsSync, mkdirSync, readFileSync } from "node:fs";
 import { dirname, resolve } from "node:path";
 
 const [, , sourcePackArg = "dist/wounded_officer_treatment_assignments.pack", outputPackArg] = process.argv;
@@ -15,6 +15,56 @@ const pending = new Map();
 function fail(message) {
   throw new Error(message);
 }
+
+function configuredCost(name) {
+  const config = readFileSync(resolve("pack_root/script/campaign/mod/a_wota_config.lua"), "utf8");
+  const match = config.match(new RegExp(`WOTA_CONFIG\\.${name}\\s*=\\s*(\\d+)`));
+  if (!match) fail(`Could not read WOTA_CONFIG.${name}`);
+  return match[1];
+}
+
+function validateLocalizationCosts() {
+  const treatmentCost = configuredCost("hua_tuo_cost");
+  const recruitCost = configuredCost("hua_tuo_recruit_cost");
+  const treatmentKeys = new Set([
+    "dilemmas_localised_description_wota_dilemma_hua_tuo_visits",
+    "cdir_events_dilemma_choice_details_localised_choice_label_wota_dilemma_hua_tuo_visitsFIRST",
+    "cdir_events_dilemma_choice_details_localised_choice_label_wota_dilemma_hua_tuo_visits_recruitFIRST",
+    "cdir_events_dilemma_choice_details_localised_choice_label_wota_dilemma_hua_tuo_visits_manualFIRST",
+    "cdir_events_dilemma_choice_details_localised_choice_label_wota_dilemma_hua_tuo_visits_bothFIRST",
+    "dilemmas_localised_description_wota_dilemma_physician_visits",
+    "cdir_events_dilemma_choice_details_localised_choice_label_wota_dilemma_physician_visitsFIRST",
+  ]);
+  const recruitKeys = new Set([
+    "cdir_events_dilemma_choice_details_localised_choice_label_wota_dilemma_hua_tuo_visits_recruitSECOND",
+    "cdir_events_dilemma_choice_details_localised_choice_label_wota_dilemma_hua_tuo_visits_bothSECOND",
+    "cdir_events_dilemma_choice_details_localised_choice_label_wota_dilemma_hua_tuo_visits_recruit_onlyFIRST",
+    "cdir_events_dilemma_choice_details_localised_choice_label_wota_dilemma_hua_tuo_visits_rewards_onlyFIRST",
+  ]);
+  const localeFiles = [
+    "localization/wota_en.loc.tsv",
+    "localization/wota_ja.loc.tsv",
+    "localization/wota_ko.loc.tsv",
+    "rpfm_import/wota_zh_cn.loc.tsv",
+  ];
+
+  for (const localeFile of localeFiles) {
+    const localizedRows = new Map(readFileSync(resolve(localeFile), "utf8")
+      .split(/\r?\n/)
+      .map((line) => line.split("\t"))
+      .map(([key, value]) => [key, value]));
+    for (const [keys, cost] of [[treatmentKeys, treatmentCost], [recruitKeys, recruitCost]]) {
+      for (const key of keys) {
+        const value = localizedRows.get(key);
+        if (!value || !value.replaceAll(",", "").includes(cost)) {
+          fail(`${localeFile} must show the configured ${cost} gold cost for ${key}`);
+        }
+      }
+    }
+  }
+}
+
+validateLocalizationCosts();
 
 function send(data) {
   return new Promise((resolvePromise, rejectPromise) => {

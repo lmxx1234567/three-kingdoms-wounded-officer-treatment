@@ -21,6 +21,9 @@ WOTA_CONFIG.hua_tuo_dilemma_keys = {
     rewards_only = "wota_dilemma_hua_tuo_visits_rewards_only"
 }
 WOTA_CONFIG.physician_dilemma_key = "wota_dilemma_physician_visits"
+-- When changing either cost, update the matching paid-choice labels and
+-- descriptions in every localization/*.loc.tsv file and rpfm_import/wota_zh_cn.loc.tsv.
+-- tools/build-rpfm.mjs verifies those localized prices before building.
 WOTA_CONFIG.hua_tuo_cost = 2000
 WOTA_CONFIG.hua_tuo_recruit_cost = 1000
 WOTA_CONFIG.hua_tuo_chance_percent = 10
