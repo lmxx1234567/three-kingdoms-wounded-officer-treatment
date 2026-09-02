@@ -117,8 +117,8 @@ local function make_modify_model(character, faction)
             return {
                 is_null_interface = function() return false end,
                 trigger_dilemma = function(_, key)
+                    if faction.trigger_dilemma_error then error("trigger failed") end
                     faction.triggered_dilemma = key
-                    return true
                 end,
                 decrease_treasury = function(_, amount)
                     faction.treasury_value = faction.treasury_value - amount
@@ -369,6 +369,22 @@ f14.triggered_dilemma = nil
 listeners.WOTA_TriggerHuaTuo.callback(start_context(c14, f14, 141))
 assert_true(f14.triggered_dilemma == WOTA_CONFIG.hua_tuo_dilemma_keys.both,
     "failed wound replacement did not reset the cooldown")
+
+-- trigger_dilemma is a void command: no return value is success, while an
+-- actual command error clears pending state and cooldown for an immediate retry.
+local c15, f15 = make_character(115, "", { [maimed] = true }, true)
+listeners.WOTA_TriggerHuaTuo.callback(start_context(c15, f15, 150))
+assert_true(f15.triggered_dilemma == WOTA_CONFIG.hua_tuo_dilemma_keys.both,
+    "void trigger_dilemma return was treated as failure")
+
+local c16, f16 = make_character(116, "", { [maimed] = true }, true)
+f16.trigger_dilemma_error = true
+listeners.WOTA_TriggerHuaTuo.callback(start_context(c16, f16, 160))
+assert_true(not f16.triggered_dilemma, "failed trigger_dilemma still queued an event")
+f16.trigger_dilemma_error = false
+listeners.WOTA_TriggerHuaTuo.callback(start_context(c16, f16, 161))
+assert_true(f16.triggered_dilemma == WOTA_CONFIG.hua_tuo_dilemma_keys.both,
+    "failed trigger_dilemma did not clear pending state and cooldown")
 
 -- Faction callbacks must tolerate nil and null-interface factions.
 local nil_faction_context = {

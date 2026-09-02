@@ -214,9 +214,12 @@ local function maybe_trigger_hua_tuo(context)
     cm:set_saved_value(pending_key, patient_cqi)
     cm:set_saved_value(hua_tuo_cooldown_key(faction), now + (cfg.hua_tuo_cooldown_turns or 8))
     local modify_faction = context:modify_model():get_modify_faction(faction)
-    local triggered = modify_faction
-        and not modify_faction:is_null_interface()
-        and modify_faction:trigger_dilemma(dilemma_key, true)
+    local triggered = false
+    if modify_faction and not modify_faction:is_null_interface() then
+        triggered = pcall(function()
+            modify_faction:trigger_dilemma(dilemma_key, true)
+        end)
+    end
     if not triggered then
         cm:set_saved_value(pending_key, 0)
         reset_hua_tuo_cooldown(faction)
