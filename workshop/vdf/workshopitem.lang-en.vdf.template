@@ -6,7 +6,7 @@
     "previewfile"       "__ABSOLUTE_WORKSHOP_DIR__\\preview\\wounded-officer-treatment-preview-en.jpg"
     "visibility"        "0"
     "title"             "Wounded Officer Treatment Assignments - English Translation"
-    "description"       "[b]English Translation Pack[/b]\\n\\nSubscribe to the main mod first, then enable this English translation pack after it. Do not enable multiple translation packs at the same time.\\n\\nMain mod: https://steamcommunity.com/sharedfiles/filedetails/?id=__MAIN_ID__\\n\\n[简体中文] 这是主 MOD 的英语语言包。请先订阅主 MOD，再启用本语言包。\\n[日本語] メイン MOD の英語翻訳パックです。\\n[한국어] 메인 모드의 영어 번역팩입니다."
+    "description"       "[b]English Translation Pack[/b]Subscribe to the main mod first, then enable this English translation pack after it. Do not enable multiple translation packs at the same time.Main mod: https://steamcommunity.com/sharedfiles/filedetails/?id=__MAIN_ID__[简体中文] 这是主 MOD 的英语语言包。请先订阅主 MOD，再启用本语言包。[日本語] メイン MOD の英語翻訳パックです。[한국어] 메인 모드의 영어 번역팩입니다."
     "changenote"        "Updated treatment costs and recall behavior to match the main mod."
     "tags"              "mod;campaign;ui"
 }

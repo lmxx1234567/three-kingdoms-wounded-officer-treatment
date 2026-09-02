@@ -93,6 +93,8 @@ rpfm_import/           可导入 RPFM 的 DB 与 Loc TSV
 tests/                 本机 Lua 逻辑测试
 docs/                  技术与兼容说明
 workshop/              Workshop 预览图、上传内容、VDF 模板和发布说明
+docs/STEAM_WORKSHOP_VDF.md
+                       Steam Workshop VDF 与描述排版规则
 ```
 
 ## 当前测试状态

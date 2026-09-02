@@ -28,6 +28,9 @@ for my $file (keys %desc) {
   if ($file eq 'workshopitem.main.vdf') {
     $value =~ s{\[h2\]使用说明 / How to use\[/h2\].*?\[h2\]兼容}{${main_usage}[h2]兼容}s;
   }
+  # Keep the Workshop description as one line. Steam does not reliably
+  # interpret \n sequences in Workshop descriptions; BBCode provides the
+  # supported visual structure instead.
   $value =~ s/\n//g;
   $text =~ s/("description"\s+)"[^"]*(")/$1 . '"' . $value . $2/se;
   open my $out, '>:encoding(UTF-8)', $path or die "$path: $!";

@@ -12,6 +12,8 @@
 - `vdf/workshopitem.main.vdf.template`：SteamCMD 上传配置模板
 - `PUBLISH.zh-CN.md`：发布页文案、标签和发布前检查清单
 
+VDF 语法、路径转义和描述排版规则见 [`docs/STEAM_WORKSHOP_VDF.md`](../docs/STEAM_WORKSHOP_VDF.md)。本项目的 Workshop 描述使用单行 VDF + Steam BBCode，不使用 `\n` 或 `\\n` 换行。
+
 英语、日语、韩语语言包没有放进主项目的 content 目录，因为它们会覆盖同一组本地化 key。建议先发布简体中文主项目，确认稳定后再分别发布语言包，或在主项目说明中注明语言包下载方式。
 
 ## 上传
