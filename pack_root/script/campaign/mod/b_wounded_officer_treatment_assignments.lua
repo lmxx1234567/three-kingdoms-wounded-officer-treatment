@@ -19,6 +19,10 @@ local function character_cqi(character)
     return safe_call(character, "command_queue_index", 0)
 end
 
+local function faction_cqi(faction)
+    return safe_call(faction, "command_queue_index", 0)
+end
+
 local function treatment_key(cqi, suffix)
     return SAVE_PREFIX .. tostring(cqi) .. "_" .. suffix
 end
@@ -45,16 +49,20 @@ local function ceo_list(character)
     return safe_call(management, "all_ceos", nil)
 end
 
-local function character_has_ceo(character, wanted_key)
-    local list = ceo_list(character)
-    if not list then return false end
+local function list_has_ceo(list, wanted_key)
+    if not list or not list.num_items or not list.item_at then return false end
     for i = 0, list:num_items() - 1 do
         local ceo = list:item_at(i)
-        if ceo and not ceo:is_null_interface() and ceo:ceo_data_key() == wanted_key then
+        if ceo and not safe_call(ceo, "is_null_interface", true)
+            and safe_call(ceo, "ceo_data_key", "") == wanted_key then
             return true
         end
     end
     return false
+end
+
+local function character_has_ceo(character, wanted_key)
+    return list_has_ceo(ceo_list(character), wanted_key)
 end
 
 local function has_configured_wound(character)
@@ -127,6 +135,17 @@ local function replace_wounds(context, character)
     end
     return removed
 end
+
+-- Export the shared assignment helpers for the separately loaded Hua Tuo event
+-- module. The script importer loads this file before c_wounded_officer_treatment_hua_tuo.lua.
+WOTA_ASSIGNMENTS = {
+    cfg = cfg,
+    safe_call = safe_call,
+    character_cqi = character_cqi,
+    faction_cqi = faction_cqi,
+    has_configured_wound = has_configured_wound,
+    replace_wounds = replace_wounds,
+}
 
 local function complete_due_treatments(context)
     local faction = context:faction()
