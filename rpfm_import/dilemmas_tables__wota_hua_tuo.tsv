@@ -1,0 +1,10 @@
+key	generate	localised_description	localised_title	ui_image	prioritized	event_category	sound_popup_override	sound_click_override
+#dilemmas_tables;1;db/dilemmas_tables/wota_hua_tuo								
+wota_dilemma_hua_tuo_visits	false				false			
+wota_dilemma_hua_tuo_visits_recruit	false				false			
+wota_dilemma_hua_tuo_visits_manual	false				false			
+wota_dilemma_hua_tuo_visits_both	false				false			
+wota_dilemma_hua_tuo_visits_recruit_only	false				false			
+wota_dilemma_hua_tuo_visits_manual_only	false				false			
+wota_dilemma_hua_tuo_visits_rewards_only	false				false			
+wota_dilemma_physician_visits	false				false			

@@ -1,0 +1,23 @@
+choice_key	dilemma_key	display_dilemma_choice_if_ceo_active	required_ceos
+#cdir_events_dilemma_choice_details_tables;2;db/cdir_events_dilemma_choice_details_tables/wota_hua_tuo			
+FIRST	wota_dilemma_hua_tuo_visits	false	
+SECOND	wota_dilemma_hua_tuo_visits	false	
+FIRST	wota_dilemma_hua_tuo_visits_recruit	false	
+SECOND	wota_dilemma_hua_tuo_visits_recruit	false	
+THIRD	wota_dilemma_hua_tuo_visits_recruit	false	
+FIRST	wota_dilemma_hua_tuo_visits_manual	false	
+SECOND	wota_dilemma_hua_tuo_visits_manual	false	
+THIRD	wota_dilemma_hua_tuo_visits_manual	false	
+FIRST	wota_dilemma_hua_tuo_visits_both	false	
+SECOND	wota_dilemma_hua_tuo_visits_both	false	
+THIRD	wota_dilemma_hua_tuo_visits_both	false	
+FOURTH	wota_dilemma_hua_tuo_visits_both	false	
+FIRST	wota_dilemma_hua_tuo_visits_recruit_only	false	
+SECOND	wota_dilemma_hua_tuo_visits_recruit_only	false	
+FIRST	wota_dilemma_hua_tuo_visits_manual_only	false	
+SECOND	wota_dilemma_hua_tuo_visits_manual_only	false	
+FIRST	wota_dilemma_hua_tuo_visits_rewards_only	false	
+SECOND	wota_dilemma_hua_tuo_visits_rewards_only	false	
+THIRD	wota_dilemma_hua_tuo_visits_rewards_only	false	
+FIRST	wota_dilemma_physician_visits	false	
+SECOND	wota_dilemma_physician_visits	false	
