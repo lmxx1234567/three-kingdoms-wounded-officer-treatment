@@ -126,6 +126,12 @@ workshop/              Workshop 预览图、上传内容、VDF 模板和发布�
 lua tests/test_treatment.lua pack_root/script/campaign/mod
 ```
 
+使用 Node.js 20 或更新版本运行本地化费用校验的回归测试（无需启动 RPFM 服务端）：
+
+```bash
+node --test tests/test_localization_costs.mjs
+```
+
 ## 使用 RPFM 构建
 
 为 Three Kingdoms 新建 Mod 类型 Pack，导入 `pack_root/script`，再批量导入 `rpfm_import` 中的 TSV。TSV 已包含 RPFM metadata 行与正确的 Pack 内部路径。使用 Node.js 20 和 RPFM 服务端自动构建时运行 `node --experimental-websocket tools/build-rpfm.mjs`。

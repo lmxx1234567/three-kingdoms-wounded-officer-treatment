@@ -126,6 +126,13 @@ Run the host-side logic test with:
 lua tests/test_treatment.lua pack_root/script/campaign/mod
 ```
 
+Run the localization cost validation regressions with Node.js 20 or newer (no
+RPFM server required):
+
+```bash
+node --test tests/test_localization_costs.mjs
+```
+
 ## Building with RPFM
 
 With RPFM 5.x, start `rpfm_server` and run the repository build client:
